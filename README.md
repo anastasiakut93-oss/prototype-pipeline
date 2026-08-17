@@ -18,7 +18,7 @@
 Одна команда добавляет маркетплейс:
 
 ```
-/plugin marketplace add <адрес-репозитория>
+/plugin marketplace add anastasiakut93-oss/prototype-pipeline
 ```
 
 Дальше — сам пайплайн:
