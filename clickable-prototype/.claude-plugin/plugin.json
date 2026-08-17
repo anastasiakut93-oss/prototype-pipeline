@@ -1,0 +1,16 @@
+{
+  "name": "clickable-prototype",
+  "description": "Пайплайн сборки кликабельного прототипа интерфейса в одном HTML-файле — по брифу, исследованию или транскрипту встречи. Для людей без опыта в коде.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Anastasia Kutina"
+  },
+  "keywords": [
+    "prototype",
+    "clickable",
+    "html",
+    "ux",
+    "design",
+    "прототип"
+  ]
+}

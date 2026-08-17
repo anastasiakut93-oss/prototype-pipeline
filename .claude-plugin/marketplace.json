@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "prototype-pipeline",
+  "version": "1.0.0",
+  "description": "Пайплайн сборки кликабельного HTML-прототипа: от брифа или исследования до ссылки, которую можно показать заказчику. Рассчитан на человека без опыта в коде.",
+  "owner": {
+    "name": "Anastasia Kutina"
+  },
+  "plugins": [
+    {
+      "name": "clickable-prototype",
+      "description": "Ведёт по этапам от брифа до готового кликабельного прототипа в одном HTML-файле: интервью, карта экранов, правдоподобные данные, каркас, экраны, проверка, отдача.",
+      "source": "./clickable-prototype",
+      "category": "design"
+    }
+  ]
+}
