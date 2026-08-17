@@ -55,6 +55,7 @@
   --border:#E2E8F0; --border-strong:#CBD5E1;
   --text:#0F172A; --text-muted:#475569; --text-faint:#64748B;
   --accent:#2563EB; --accent-dark:#1D4ED8; --accent-bg:#EFF6FF;
+  --on-accent:#FFFFFF; --cta:var(--accent); --ring:var(--accent);
   --warning:#F97316; --warning-bg:#FFF7ED; --warning-border:#FED7AA;
   --success:#16A34A; --success-bg:#F0FDF4; --success-border:#BBF7D0;
   --danger:#DC2626;  --danger-bg:#FEF2F2;  --danger-border:#FECACA;
@@ -83,7 +84,7 @@ svg{display:block; flex-shrink:0}
 /* Видимый фокус — иначе прототип нельзя пройти с клавиатуры */
 button:focus-visible,a:focus-visible,input:focus-visible,
 select:focus-visible,[tabindex]:focus-visible{
-  outline:2px solid var(--accent); outline-offset:2px; border-radius:6px;
+  outline:2px solid var(--ring); outline-offset:2px; border-radius:6px;
 }
 
 .screen{display:none}
@@ -100,8 +101,9 @@ select:focus-visible,[tabindex]:focus-visible{
   cursor:pointer; transition:background var(--dur), border-color var(--dur);
 }
 .btn:hover{background:var(--surface-2)}
-.btn-primary{background:var(--accent); border-color:var(--accent); color:#fff}
+.btn-primary{background:var(--accent); border-color:var(--accent); color:var(--on-accent)}
 .btn-primary:hover{background:var(--accent-dark)}
+.btn-cta{background:var(--cta); border-color:var(--cta); color:var(--on-accent)}
 </style>
 ```
 
