@@ -9,18 +9,18 @@
 
 ## Установка
 
-```bash
+```
 /plugin marketplace add Owl-Listener/prototype-pipeline
 ```
 
-```bash
+```
 /plugin install clickable-prototype@prototype-pipeline
 ```
 
 Замените `Owl-Listener/prototype-pipeline` на адрес репозитория, куда вы его
 положили. Локально, без GitHub, работает и путь к папке:
 
-```bash
+```
 /plugin marketplace add ~/projects/prototype-pipeline
 ```
 
@@ -68,7 +68,7 @@
 Их отсутствие ничего не ломает — этапы выполняются и без них. Но с ними прототип
 получается заметно лучше:
 
-```bash
+```
 /plugin marketplace add Owl-Listener/designer-skills
 ```
 
