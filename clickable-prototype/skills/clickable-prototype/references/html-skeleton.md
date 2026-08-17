@@ -46,24 +46,30 @@
 ## Общая часть: токены и база
 
 Всё оформление — через переменные. Значения подставляются из подбора
-`ui-ux-pro-max` (см. `design-system.md`); ниже — нейтральный набор по умолчанию.
+`ui-ux-pro-max` (см. `design-system.md`), сверенного с шагом 3.5 того же файла.
+
+Набор ниже — нейтральная база в духе shadcn/ui: серая шкала zinc, тёмная основная
+кнопка, границы вместо теней. Брендовый цвет клиента подставляется в `--brand`
+и работает на данных и активных элементах, не заливая интерфейс.
 
 ```html
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 :root{
-  --bg:#F5F7FA; --surface:#FFFFFF; --surface-2:#F1F5F9;
-  --border:#E2E8F0; --border-strong:#CBD5E1;
-  --text:#0F172A; --text-muted:#475569; --text-faint:#64748B;
-  --accent:#2563EB; --accent-dark:#1D4ED8; --accent-bg:#EFF6FF;
-  --on-accent:#FFFFFF; --cta:var(--accent); --ring:var(--accent);
-  --warning:#F97316; --warning-bg:#FFF7ED; --warning-border:#FED7AA;
-  --success:#16A34A; --success-bg:#F0FDF4; --success-border:#BBF7D0;
-  --danger:#DC2626;  --danger-bg:#FEF2F2;  --danger-border:#FECACA;
-  --radius-sm:8px; --radius:12px; --radius-lg:16px;
-  --shadow-sm:0 1px 2px rgba(15,23,42,.06);
-  --shadow:0 4px 16px rgba(15,23,42,.08);
-  --dur:180ms;
-  --font-body: ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  --bg:#FAFAFA; --surface:#FFFFFF; --surface-2:#F4F4F5;
+  --border:#E4E4E7; --border-strong:#D4D4D8;
+  --text:#18181B; --text-muted:#52525B; --text-faint:#8E8E96;
+  --brand:#2563EB;                                  /* цвет клиента: графики, активный пункт меню */
+  --accent:#18181B; --accent-dark:#000000; --accent-bg:#F4F4F5;
+  --on-accent:#FFFFFF; --cta:var(--brand); --ring:#18181B;
+  --warning:#B45309; --warning-bg:#FFFBEB; --warning-border:#FDE68A;
+  --success:#15803D; --success-bg:#F0FDF4; --success-border:#BBF7D0;
+  --danger:#B91C1C;  --danger-bg:#FEF2F2;  --danger-border:#FECACA;
+  --radius-sm:7px; --radius:10px; --radius-lg:14px;
+  --shadow-sm:none;                                  /* границы вместо теней */
+  --shadow:0 10px 32px rgba(24,24,27,.12);           /* только модалки и поповеры */
+  --dur:160ms;
+  --font-body: Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
   --font-head: var(--font-body);
 }
 @media (prefers-reduced-motion: reduce){
@@ -173,7 +179,8 @@ select:focus-visible,[tabindex]:focus-visible{
   transition:background var(--dur), color var(--dur);
 }
 .nav-item:hover{background:var(--surface-2); color:var(--text)}
-.nav-item[aria-current="page"]{background:var(--accent-bg); color:var(--accent-dark); font-weight:500}
+.nav-item[aria-current="page"]{background:var(--surface-2); color:var(--text); font-weight:600;
+                              box-shadow:inset 2px 0 0 var(--brand)}
 ```
 
 Переключатель ролей — внизу бокового меню, под именем пользователя, там же, где
