@@ -1,16 +1,126 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "prototype-pipeline",
-  "version": "1.0.0",
-  "description": "Пайплайн сборки кликабельного HTML-прототипа: от брифа или исследования до ссылки, которую можно показать заказчику. Рассчитан на человека без опыта в коде.",
+  "version": "1.1.0",
+  "description": "Пайплайн сборки кликабельного прототипа: от брифа или исследования до ссылки, которую можно показать заказчику. Рассчитан на человека без опыта в коде. Здесь же ставятся плагины, которые пайплайн использует по ходу — отдельно искать их не нужно.",
   "owner": {
     "name": "Anastasia Kutina"
   },
   "plugins": [
     {
       "name": "clickable-prototype",
-      "description": "Ведёт по этапам от брифа до готового кликабельного прототипа в одном HTML-файле: интервью, карта экранов, правдоподобные данные, каркас, экраны, проверка, отдача.",
+      "description": "Ведёт по этапам от брифа до готового кликабельного прототипа в одном HTML-файле: интервью, карта экранов, дизайн-система, правдоподобные данные, каркас, экраны, проверка, отдача.",
       "source": "./clickable-prototype",
+      "category": "design"
+    },
+
+    {
+      "name": "ui-ux-pro-max",
+      "description": "Оформление прототипа: база из 84 стилей, 192 палитр и 74 шрифтовых пар с подбором дизайн-системы под тип продукта. Пайплайн берёт отсюда палитру, шрифты и антипаттерны на этапе каркаса. Автор: nextlevelbuilder.",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git"
+      },
+      "category": "design"
+    },
+
+    {
+      "name": "ux-strategy",
+      "description": "Информационная архитектура, постановка задачи, дизайн-бриф. Пайплайн использует на этапах входа и карты экранов. Автор: MC Dean, designer-skills.",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/Owl-Listener/designer-skills.git",
+        "path": "ux-strategy",
+        "ref": "main"
+      },
+      "category": "design"
+    },
+    {
+      "name": "prototyping-testing",
+      "description": "Схемы пользовательских путей, спецификации экранов, эвристическая оценка. Пайплайн использует на карте экранов и проверке. Автор: MC Dean, designer-skills.",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/Owl-Listener/designer-skills.git",
+        "path": "prototyping-testing",
+        "ref": "main"
+      },
+      "category": "design"
+    },
+    {
+      "name": "interaction-design",
+      "description": "Формы, состояния, обратная связь, обработка ошибок. Пайплайн использует при сборке экранов. Автор: MC Dean, designer-skills.",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/Owl-Listener/designer-skills.git",
+        "path": "interaction-design",
+        "ref": "main"
+      },
+      "category": "design"
+    },
+    {
+      "name": "ui-design",
+      "description": "Палитры, типографские шкалы, сетки, визуальная иерархия. Пайплайн использует при сборке каркаса. Автор: MC Dean, designer-skills.",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/Owl-Listener/designer-skills.git",
+        "path": "ui-design",
+        "ref": "main"
+      },
+      "category": "design"
+    },
+    {
+      "name": "visual-critique",
+      "description": "Семь визуальных критик экрана с приоритетным списком правок. Пайплайн использует на этапе проверки. Автор: MC Dean, designer-skills.",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/Owl-Listener/designer-skills.git",
+        "path": "visual-critique",
+        "ref": "main"
+      },
+      "category": "design"
+    },
+    {
+      "name": "designer-toolkit",
+      "description": "Тексты интерфейса, обоснование решений, презентация работы. Пайплайн использует на экранах и при отдаче. Автор: MC Dean, designer-skills.",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/Owl-Listener/designer-skills.git",
+        "path": "designer-toolkit",
+        "ref": "main"
+      },
+      "category": "design"
+    },
+    {
+      "name": "design-research",
+      "description": "Персоны, JTBD, синтез интервью. Пайплайн использует, когда на входе есть исследование или транскрипт встречи. Автор: MC Dean, designer-skills.",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/Owl-Listener/designer-skills.git",
+        "path": "design-research",
+        "ref": "main"
+      },
+      "category": "design"
+    },
+    {
+      "name": "design-systems",
+      "description": "Спецификации компонентов, токены, аудит доступности. Нужен, когда прототип перерастает в дизайн-систему. Автор: MC Dean, designer-skills.",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/Owl-Listener/designer-skills.git",
+        "path": "design-systems",
+        "ref": "main"
+      },
+      "category": "design"
+    },
+    {
+      "name": "design-ops",
+      "description": "Передача в разработку, спецификация хендофа, дизайн-ревью. Нужен, когда прототип идёт дальше в работу. Автор: MC Dean, designer-skills.",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/Owl-Listener/designer-skills.git",
+        "path": "design-ops",
+        "ref": "main"
+      },
       "category": "design"
     }
   ]

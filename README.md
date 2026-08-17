@@ -7,27 +7,63 @@
 не спрашивает про фреймворки и базы данных, останавливается на согласование после
 каждого этапа.
 
+Подходит для внутренних систем и админок, мобильных приложений, личных кабинетов,
+дашбордов, лендингов и витрин.
+
 ## Установка
 
+Одна команда добавляет маркетплейс:
+
 ```
-/plugin marketplace add Owl-Listener/prototype-pipeline
+/plugin marketplace add <адрес-репозитория>
 ```
+
+Дальше — сам пайплайн:
 
 ```
 /plugin install clickable-prototype@prototype-pipeline
 ```
 
-Замените `Owl-Listener/prototype-pipeline` на адрес репозитория, куда вы его
-положили. Локально, без GitHub, работает и путь к папке:
+Локально, без GitHub, работает и путь к папке:
 
 ```
 /plugin marketplace add ~/projects/prototype-pipeline
 ```
 
+### Плагины, которые пайплайн использует
+
+Искать их по отдельным ссылкам не нужно — они ставятся из этого же маркетплейса:
+
+```
+/plugin install ui-ux-pro-max@prototype-pipeline
+/plugin install ux-strategy@prototype-pipeline
+/plugin install prototyping-testing@prototype-pipeline
+/plugin install interaction-design@prototype-pipeline
+/plugin install ui-design@prototype-pipeline
+/plugin install visual-critique@prototype-pipeline
+/plugin install designer-toolkit@prototype-pipeline
+/plugin install design-research@prototype-pipeline
+/plugin install design-systems@prototype-pipeline
+/plugin install design-ops@prototype-pipeline
+```
+
+Минимальный набор, если ставить не всё: `ui-ux-pro-max` (оформление),
+`ux-strategy` (структура), `visual-critique` (проверка), `designer-toolkit` (тексты).
+
+Пайплайн работает и без них — этапы просто выполняются своими силами. Но с ними
+прототип получается заметно лучше.
+
+Это чужие плагины, подключённые ссылками на их репозитории, а не копии:
+[ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) — база
+стилей, палитр и шрифтовых пар, автор nextlevelbuilder;
+[designer-skills](https://github.com/Owl-Listener/designer-skills) — набор
+дизайнерских скиллов, автор MC Dean. Обновляются они у себя, вы получаете
+актуальные версии.
+
 ## Как пользоваться
 
 ```
-/prototype прототип CRM для сети проката электровелосипедов
+/prototype панель оператора доставки: приём заявок, склад, отчёты
 ```
 
 Или просто попросить словами: «собери кликабельный прототип личного кабинета» —
@@ -36,7 +72,7 @@
 Если исследование уже есть, укажите папку:
 
 ```
-/prototype ~/research/elektrodrive — собери прототип по этим материалам
+/prototype ~/research/логистика — собери прототип по этим материалам
 ```
 
 ## Что происходит дальше
@@ -47,30 +83,20 @@
 | 1. Интервью | Задаёт до семи вопросов, по одному | — |
 | 2. Карта экранов | Показывает таблицу «роль → экраны → действия» | да |
 | 3. Данные | Собирает правдоподобные данные, показывающие проблему | да |
-| 4. Каркас | Меню, шапка, переключение ролей, пустые экраны | да |
+| 4. Оболочка и оформление | Выбирает архетип, подбирает палитру и шрифты, собирает каркас | да |
 | 5. Экраны | По одному, со скриншотом после каждого | да |
 | 6. Проверка | Проходит сценарий кликами, чинит найденное | — |
 | 7. Отдача | README, git, ссылка на GitHub Pages | — |
+
+Три архетипа оболочки выбираются автоматически по карте экранов: рабочая система
+с боковым меню, мобильное приложение в рамке телефона с таб-баром, публичная
+страница с потоком блоков.
 
 ## Что получится
 
 Папка с `index.html`, `README.md` и git-историей. Файл самодостаточный: без
 сборки, без установки зависимостей, без сервера. Его можно переслать в мессенджере
 и открыть на чужом ноутбуке.
-
-## Связь с другими плагинами
-
-Пайплайн подключает скиллы из
-[designer-skills](https://github.com/Owl-Listener/designer-skills) там, где они
-помогают: `information-architecture` и `user-flow-diagram` на карте экранов,
-`form-design` и `ux-writing` на экранах, `/critique-screen` на проверке.
-
-Их отсутствие ничего не ломает — этапы выполняются и без них. Но с ними прототип
-получается заметно лучше:
-
-```
-/plugin marketplace add Owl-Listener/designer-skills
-```
 
 ## Чего пайплайн не делает
 

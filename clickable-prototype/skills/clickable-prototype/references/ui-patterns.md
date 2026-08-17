@@ -22,17 +22,17 @@
 дешевле, чем чинить его по кусочкам.
 
 ```js
-function renderRentals(){
-  const rows = RENTALS.filter(matchesFilters);
+function renderOrders(){
+  const rows = ORDERS.filter(matchesFilters);
 
-  document.getElementById('screen-rentals').innerHTML = `
+  document.getElementById('screen-orders').innerHTML = `
     <div class="toolbar">
       <input class="input" placeholder="Поиск по клиенту или номеру"
-             value="${rentalQuery}" oninput="setRentalQuery(this.value)">
-      <button class="btn btn-primary" onclick="startRentalWizard()">Оформить аренду</button>
+             value="${orderQuery}" oninput="setOrderQuery(this.value)">
+      <button class="btn btn-primary" onclick="startOrderWizard()">Новая заявка</button>
     </div>
-    ${rows.length ? renderRentalTable(rows) : emptyState('Аренд не найдено',
-        'Измените условия поиска или оформите новую аренду.')}
+    ${rows.length ? renderOrderTable(rows) : emptyState('Заявок не найдено',
+        'Измените условия поиска или создайте новую заявку.')}
   `;
 }
 ```
@@ -41,17 +41,17 @@ function renderRentals(){
 ничего не теряет:
 
 ```js
-let rentalQuery = '';
-function setRentalQuery(v){ rentalQuery = v; renderRentals(); }
+let orderQuery = '';
+function setOrderQuery(v){ orderQuery = v; renderOrders(); }
 ```
 
 Осторожно с фокусом: перерисовка поля ввода при каждом символе сбивает каретку.
 Для поиска по таблице надёжнее перерисовывать только строки:
 
 ```js
-function setRentalQuery(v){
-  rentalQuery = v;
-  document.getElementById('rentalRows').innerHTML = renderRentalRows(filtered());
+function setOrderQuery(v){
+  orderQuery = v;
+  document.getElementById('orderRows').innerHTML = renderOrderRows(filtered());
 }
 ```
 
@@ -104,12 +104,12 @@ function sorted(rows){
 
 ```js
 const STATUS_LABELS = {
-  free:'Свободен', rented:'В аренде', in_transit:'В пути',
-  in_repair:'В ремонте', incomplete:'Неполный комплект'
+  done:'Выполнена', active:'В работе', waiting:'Ждёт подтверждения',
+  overdue:'Просрочена', draft:'Черновик'
 };
 const STATUS_CLASS = {
-  free:'st-free', rented:'st-rented', in_transit:'st-transit',
-  in_repair:'st-repair', incomplete:'st-incomplete'
+  done:'st-done', active:'st-active', waiting:'st-waiting',
+  overdue:'st-overdue', draft:'st-draft'
 };
 const chip = s => `<span class="chip ${STATUS_CLASS[s]}">${STATUS_LABELS[s]}</span>`;
 ```
@@ -119,11 +119,11 @@ const chip = s => `<span class="chip ${STATUS_CLASS[s]}">${STATUS_LABELS[s]}</sp
   display:inline-block; padding:3px 9px; border-radius:999px;
   font-size:12.5px; font-weight:500; white-space:nowrap; border:1px solid transparent;
 }
-.st-free{background:var(--success-bg); color:var(--success); border-color:var(--success-border)}
-.st-rented{background:var(--accent-bg); color:var(--accent-dark)}
-.st-transit{background:var(--warning-bg); color:var(--warning); border-color:var(--warning-border)}
-.st-repair{background:var(--danger-bg); color:var(--danger); border-color:var(--danger-border)}
-.st-incomplete{background:var(--surface-2); color:var(--text-muted)}
+.st-done{background:var(--success-bg); color:var(--success); border-color:var(--success-border)}
+.st-active{background:var(--accent-bg); color:var(--accent-dark)}
+.st-waiting{background:var(--warning-bg); color:var(--warning); border-color:var(--warning-border)}
+.st-overdue{background:var(--danger-bg); color:var(--danger); border-color:var(--danger-border)}
+.st-draft{background:var(--surface-2); color:var(--text-muted)}
 ```
 
 Цвет несёт смысл, но не должен быть единственным носителем: подпись рядом есть
@@ -147,13 +147,13 @@ function goToStep(n, skipValidation){
 }
 
 function validateStep(n){
-  if (n === 1 && !draft.client){ toast('Выберите клиента'); return false; }
-  if (n === 2 && !draft.bike){   toast('Выберите велосипед'); return false; }
+  if (n === 1 && !draft.client){  toast('Выберите клиента'); return false; }
+  if (n === 2 && !draft.service){ toast('Выберите услугу'); return false; }
   return true;
 }
 
 function renderStepper(){
-  const steps = ['Клиент','Велосипед','Срок и тариф','Договор'];
+  const steps = ['Клиент','Услуга','Срок и стоимость','Подтверждение'];
   document.getElementById('stepper').innerHTML = steps.map((label,i) => {
     const n = i + 1;
     const state = n < step ? 'done' : n === step ? 'current' : 'todo';
@@ -165,7 +165,10 @@ function renderStepper(){
 ```
 
 Возврат на пройденный шаг обязателен: на демонстрации заказчик всегда просит
-«а поменяйте модель» — и мастер без возврата разваливается.
+«а поменяйте здесь» — и мастер без возврата разваливается.
+
+В мобильном архетипе шаги не влезают в шапку: показывай их полосой прогресса
+«Шаг 2 из 4» и оставляй кнопку «назад» в шапке экрана.
 
 Тонкости валидации и порядка полей — `interaction-design:form-design`.
 
@@ -175,22 +178,21 @@ function renderStepper(){
 отдельный экран, который наполняется перед показом.
 
 ```js
-let currentRentalId = null;
+let currentOrderId = null;
 
-function openRental(id){
-  currentRentalId = id;
-  nav('rental-detail');
-  renderRentalDetail();
+function openOrder(id){
+  currentOrderId = id;
+  nav('order-detail');
 }
 
-function renderRentalDetail(){
-  const r = RENTALS.find(x => x.id === currentRentalId);
-  document.getElementById('screen-rental-detail').innerHTML = `
-    <button class="btn btn-ghost" onclick="nav('rentals', navItem('rentals'))">← К списку аренд</button>
+function renderOrderDetail(){
+  const o = ORDERS.find(x => x.id === currentOrderId);
+  document.getElementById('screen-order-detail').innerHTML = `
+    <button class="btn" onclick="nav('orders')">← К списку заявок</button>
     <div class="card">
-      <h2>${r.client}</h2>
-      <div class="meta">${r.model} · ${r.vin} · до ${fmtDate(r.until)}</div>
-      ${chip(r.status)}
+      <h2>Заявка №${o.number}</h2>
+      <div class="meta">${o.client} · ${o.service} · до ${fmtDate(o.due)}</div>
+      ${chip(o.status)}
     </div>
   `;
 }
@@ -250,7 +252,7 @@ const emptyState = (title, hint, action = '') => `
 ```
 
 Текст пустого состояния объясняет, что произошло и что делать дальше. «Нет
-данных» — плохо; «Аренд не найдено. Измените условия поиска или оформите новую» —
+данных» — плохо; «Заявок не найдено. Измените условия поиска или создайте новую» —
 хорошо. Формулировки прогоняй через `designer-toolkit:ux-writing`.
 
 ## Подсветка проблемы
